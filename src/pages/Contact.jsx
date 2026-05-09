@@ -23,33 +23,11 @@ const inputClass =
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', company: '', email: '', message: '' });
-  const [errors, setErrors] = useState({});
+  // eslint-disable-next-line no-unused-vars
   const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-
-  const validate = () => {
-    const e = {};
-    if (!form.name.trim()) e.name = 'Name is required';
-    if (!form.email.trim()) e.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email';
-    if (!form.message.trim()) e.message = 'Message is required';
-    return e;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setErrors({});
-    setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setSubmitting(false);
-    setSubmitted(true);
-  };
 
   const handleChange = (field) => (e) => {
     setForm({ ...form, [field]: e.target.value });
-    if (errors[field]) setErrors({ ...errors, [field]: '' });
   };
 
   return (
@@ -142,9 +120,12 @@ export default function Contact() {
                   key="form"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  onSubmit={handleSubmit}
+                  action="https://formsubmit.co/pumpguardx@gmail.com"
+                  method="POST"
                   className="glass-card rounded-2xl p-8 space-y-5"
                 >
+                  <input type="hidden" name="_captcha" value="false" />
+                  
                   {/* Name */}
                   <div>
                     <label className="flex items-center gap-2 text-xs font-semibold text-[#8B9DB0] uppercase tracking-widest mb-2" style={{ fontFamily: 'Space Grotesk' }}>
@@ -152,25 +133,13 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="name"
                       placeholder="Your name"
                       className={inputClass}
                       value={form.name}
                       onChange={handleChange('name')}
                       style={{ fontFamily: 'Inter' }}
                     />
-                    <AnimatePresence>
-                      {errors.name && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0 }}
-                          className="text-[#EF4444] text-xs mt-1"
-                          style={{ fontFamily: 'Inter' }}
-                        >
-                          {errors.name}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
                   </div>
 
                   {/* Company */}
@@ -180,6 +149,7 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="company"
                       placeholder="Your company or institution"
                       className={inputClass}
                       value={form.company}
@@ -195,25 +165,13 @@ export default function Contact() {
                     </label>
                     <input
                       type="email"
+                      name="email"
                       placeholder="you@company.com"
                       className={inputClass}
                       value={form.email}
                       onChange={handleChange('email')}
                       style={{ fontFamily: 'Inter' }}
                     />
-                    <AnimatePresence>
-                      {errors.email && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0 }}
-                          className="text-[#EF4444] text-xs mt-1"
-                          style={{ fontFamily: 'Inter' }}
-                        >
-                          {errors.email}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
                   </div>
 
                   {/* Message */}
@@ -223,25 +181,13 @@ export default function Contact() {
                     </label>
                     <textarea
                       rows={5}
+                      name="message"
                       placeholder="Tell us about your setup, what you'd like to achieve, or just say hello."
                       className={`${inputClass} resize-none`}
                       value={form.message}
                       onChange={handleChange('message')}
                       style={{ fontFamily: 'Inter' }}
                     />
-                    <AnimatePresence>
-                      {errors.message && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0 }}
-                          className="text-[#EF4444] text-xs mt-1"
-                          style={{ fontFamily: 'Inter' }}
-                        >
-                          {errors.message}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
                   </div>
 
                   {/* Submit */}
@@ -249,25 +195,11 @@ export default function Contact() {
                     type="submit"
                     className="w-full py-4 rounded-xl font-bold text-[#060E1A] flex items-center justify-center gap-3 btn-cyan relative z-10"
                     style={{ fontFamily: 'Space Grotesk' }}
-                    disabled={submitting}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    {submitting ? (
-                      <>
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
-                          className="w-5 h-5 border-2 border-[#060E1A]/30 border-t-[#060E1A] rounded-full"
-                        />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send size={18} />
-                        Send Message
-                      </>
-                    )}
+                    <Send size={18} />
+                    Send Message
                   </motion.button>
                 </motion.form>
               )}
