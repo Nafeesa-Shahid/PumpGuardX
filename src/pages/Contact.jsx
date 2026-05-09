@@ -125,6 +125,8 @@ export default function Contact() {
                   className="glass-card rounded-2xl p-8 space-y-5"
                 >
                   <input type="hidden" name="_captcha" value="false" />
+                  <input type="hidden" name="_next" value="https://pumpguardx.vercel.app" />
+                  <input type="hidden" name="_template" value="table" />
                   
                   {/* Name */}
                   <div>
