@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield, Globe, Share2, ExternalLink, Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
 const quickLinks = [
   { path: '/', label: 'Home' },
   { path: '/how-it-works', label: 'How It Works' },

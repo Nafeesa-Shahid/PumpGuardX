@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle, Mail, MessageSquare, Building, User } from 'lucide-react';
+import { Send, Mail, MessageSquare, Building, User } from 'lucide-react';
 import AnimatedSection from '../components/AnimatedSection';
 
 const reasons = [
